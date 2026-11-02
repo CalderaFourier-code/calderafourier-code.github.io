@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tohon Fourier — Carte Visite & QR Code Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;900&family=Rajdhani:wght@500;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --green: #00ff41;
+            --green-dim: #003b00;
+            --dark-bg: #0a0a0a;
+            --card-bg: #0f1923;
+            --cyan: #00d4ff;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            background: var(--dark-bg);
+            color: #e0e0e0;
+            font-family: 'Rajdhani', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 30px 20px;
+        }
+        .container {
+            max-width: 900px;
+            width: 100%;
+            text-align: center;
+        }
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--green);
+            font-size: 28px;
+            letter-spacing: 3px;
+            margin-bottom: 8px;
+            text-shadow: 0 0 10px rgba(0,255,65,0.4);
+        }
+        .subtitle {
+            font-family: 'Share Tech Mono', monospace;
+            color: var(--cyan);
+            font-size: 14px;
+            margin-bottom: 30px;
+        }
+        .cards-row {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+        }
+        /* BUSINESS CARD */
+        .business-card {
+            width: 420px;
+            height: 250px;
+            background: linear-gradient(135deg, #0d141c 0%, #060a0f 100%);
+            border: 2px solid var(--green);
+            border-radius: 12px;
+            padding: 24px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            box-shadow: 0 0 20px rgba(0, 255, 65, 0.2);
+            position: relative;
+            overflow: hidden;
+            text-align: left;
+        }
+        .business-card::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0; height: 3px;
+            background: linear-gradient(90deg, var(--green), var(--cyan), var(--green));
+        }
+        .qr-box {
+            background: #fff;
+            padding: 8px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .qr-box img {
+            width: 130px;
+            height: 130px;
+            display: block;
+        }
+        .qr-label {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 9px;
+            color: #333;
+            margin-top: 4px;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+        .card-details {
+            flex: 1;
+        }
+        .card-name {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 20px;
+            font-weight: 900;
+            color: var(--green);
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+        }
+        .card-title {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 11px;
+            color: var(--cyan);
+            margin-bottom: 14px;
+            text-transform: uppercase;
+        }
+        .card-info {
+            list-style: none;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 11px;
+            color: #aaa;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .card-info li i {
+            width: 16px;
+            color: var(--green);
+        }
+        .card-info a {
+            color: #fff;
+            text-decoration: none;
+        }
+        .card-badge {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 3px 8px;
+            background: rgba(0, 255, 65, 0.1);
+            border: 1px solid rgba(0, 255, 65, 0.3);
+            border-radius: 4px;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 10px;
+            color: var(--green);
+        }
+
+        /* CYBER BADGE */
+        .cyber-badge {
+            width: 320px;
+            background: #0d141c;
+            border: 1px solid #1a2a1a;
+            border-radius: 12px;
+            padding: 24px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+        }
+        .cyber-badge h3 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 14px;
+            color: var(--green);
+            margin-bottom: 14px;
+            letter-spacing: 1px;
+        }
+        .cyber-badge img {
+            width: 180px;
+            height: 180px;
+            border: 1px solid var(--green);
+            border-radius: 8px;
+            padding: 6px;
+            background: #0a0a0a;
+            margin-bottom: 12px;
+        }
+        .badge-url {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 11px;
+            color: var(--cyan);
+            word-break: break-all;
+        }
+
+        /* BUTTONS */
+        .actions {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .btn {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 13px;
+            padding: 12px 24px;
+            border-radius: 6px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .btn-green {
+            background: transparent;
+            color: var(--green);
+            border: 2px solid var(--green);
+        }
+        .btn-green:hover {
+            background: var(--green);
+            color: #000;
+            box-shadow: 0 0 15px var(--green);
+        }
+        .btn-cyan {
+            background: transparent;
+            color: var(--cyan);
+            border: 2px solid var(--cyan);
+        }
+        .btn-cyan:hover {
+            background: var(--cyan);
+            color: #000;
+            box-shadow: 0 0 15px var(--cyan);
+        }
+
+        @media print {
+            body { background: #fff !important; color: #000 !important; padding: 0; }
+            h1, .subtitle, .actions, .cyber-badge { display: none !important; }
+            .business-card {
+                border: 2px solid #000 !important;
+                box-shadow: none !important;
+                background: #fff !important;
+                color: #000 !important;
+                page-break-inside: avoid;
+            }
+            .card-name { color: #000 !important; }
+            .card-title { color: #444 !important; }
+            .card-info { color: #222 !important; }
+            .card-info li i { color: #000 !important; }
+            .card-info a { color: #000 !important; }
+            .card-badge { border-color: #000 !important; color: #000 !important; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>CARTE DE VISITE &amp; QR CODE</h1>
+        <div class="subtitle">&gt; Scannez pour accéder au portfolio sécurisé de Tohon Fourier</div>
+
+        <div class="cards-row">
+            <!-- Business Card Format -->
+            <div class="business-card">
+                <div class="qr-box">
+                    <img src="qrcode_portfolio.png" alt="QR Code Portfolio">
+                    <span class="qr-label">SCANNEZ-MOI</span>
+                </div>
+                <div class="card-details">
+                    <div class="card-name">TOHON FOURIER</div>
+                    <div class="card-title">Cybersécurité &amp; DevSecOps</div>
+                    <ul class="card-info">
+                        <li><i class="fas fa-envelope"></i> fouriertohon@gmail.com</li>
+                        <li><i class="fas fa-phone"></i> +229 01 96 42 45 71</li>
+                        <li><i class="fab fa-github"></i> CalderaFourier-code</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Cotonou, Bénin</li>
+                    </ul>
+                    <div class="card-badge"><i class="fas fa-shield-alt"></i> SOC · Wazuh · Pentest</div>
+                </div>
+            </div>
+
+            <!-- Cyber Badge Format -->
+            <div class="cyber-badge">
+                <h3>QR CODE CYBERPUNK</h3>
+                <img src="qrcode_portfolio_cyber.png" alt="Cyber QR Code">
+                <div class="badge-url">https://calderafourier-code.github.io/</div>
+            </div>
+        </div>
+
+        <div class="actions">
+            <a href="qrcode_portfolio.png" download="QR_Tohon_Fourier.png" class="btn btn-green">
+                <i class="fas fa-download"></i> Télécharger QR Code (PNG)
+            </a>
+            <a href="qrcode_portfolio.svg" download="QR_Tohon_Fourier.svg" class="btn btn-green">
+                <i class="fas fa-file-code"></i> Télécharger Vecteur (SVG)
+            </a>
+            <button onclick="window.print()" class="btn btn-cyan">
+                <i class="fas fa-print"></i> Imprimer Carte de Visite
+            </button>
+            <a href="https://calderafourier-code.github.io/" target="_blank" class="btn btn-cyan">
+                <i class="fas fa-external-link-alt"></i> Tester le Lien
+            </a>
+        </div>
+    </div>
+</body>
+</html>
