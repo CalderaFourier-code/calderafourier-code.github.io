@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AttackGraph-AI — Modélisation de Chemins d'Attaque & Priorisation par Graphes</title>
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@600;800;900&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Top Header & Navigation -->
+    <header class="app-header">
+        <div class="header-logo">
+            <span class="logo-icon"><i class="fas fa-project-diagram"></i></span>
+            <div>
+                <h1 class="logo-title">ATTACKGRAPH<span class="highlight">.AI</span></h1>
+                <p class="logo-subtitle">Moteur de Corrélation de Chemins d'Attaque &amp; Priorisation par Graphes</p>
+            </div>
+        </div>
+        <div class="header-badges">
+            <span class="devsecops-pill"><i class="fas fa-shield-alt"></i> DevSecOps Engineering v1.0</span>
+            <span class="author-pill"><i class="fab fa-github"></i> Tohon Fourier</span>
+        </div>
+    </header>
+
+    <!-- Control Center / Input Toolbar -->
+    <section class="toolbar-section">
+        <div class="toolbar-card">
+            <div class="toolbar-inputs">
+                <div class="input-field-group">
+                    <label><i class="fas fa-globe"></i> CIBLE À AUDITER</label>
+                    <input type="text" id="targetUrl" value="https://entreprise.com" placeholder="https://votre-entreprise.com">
+                </div>
+                <div class="input-field-group">
+                    <label><i class="fas fa-network-wired"></i> ARCHITECTURE &amp; SCÉNARIO</label>
+                    <select id="scenarioSelect">
+                        <option value="saas_jwt">Application SaaS &amp; API (XSS ➔ JWT ➔ BOLA ➔ BDD)</option>
+                        <option value="cloud_ssrf">Infrastructure Cloud AWS (SSRF ➔ IAM ➔ S3 Data Lake)</option>
+                        <option value="ecommerce_sqli">E-Commerce &amp; Paiement (SQLi ➔ Redis ➔ Cartes)</option>
+                    </select>
+                </div>
+                <button id="generateBtn" class="primary-btn">
+                    <i class="fas fa-wand-magic-sparkles"></i> CONSTRUIRE LE GRAPHE D'ATTAQUE
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Workspace (Grid: Graph Visualization + Narrative Panel) -->
+    <main class="workspace-grid">
+        <!-- Left: Interactive Attack Graph Viewer -->
+        <section class="graph-viewer-card">
+            <div class="card-header">
+                <h2><i class="fas fa-bezier-curve"></i> CARTOGRAPHIE INTERACTIVE DU CHEMIN D'ATTAQUE</h2>
+                <div class="graph-legend">
+                    <span class="legend-item"><span class="legend-dot ep"></span> Entrée</span>
+                    <span class="legend-dot-item"><span class="legend-dot vuln"></span> Vulnérabilité / Pivot</span>
+                    <span class="legend-dot-item"><span class="legend-dot cj"></span> Joyau (Crown Jewel)</span>
+                </div>
+            </div>
+
+            <!-- Notice / Quick Simulator Status -->
+            <div id="remediationBanner" class="remediation-banner hidden">
+                <i class="fas fa-check-circle"></i>
+                <span id="remediationMsg">Point d'étranglement remédié ! Chemin d'attaque vers la base de données brisé.</span>
+                <button class="reset-btn" onclick="resetRemediation()">Réinitialiser</button>
+            </div>
+
+            <!-- Canvas Container where DAG is drawn -->
+            <div class="graph-container" id="graphContainer">
+                <div id="nodesWrapper" class="nodes-wrapper"></div>
+                <svg id="svgEdges" class="svg-edges"></svg>
+            </div>
+
+            <div class="graph-footer">
+                <span><i class="fas fa-mouse-pointer"></i> <strong>Cliquez sur n'importe quel nœud</strong> pour inspecter la faille et simuler un correctif de sécurité.</span>
+            </div>
+        </section>
+
+        <!-- Right: AI Executive Narrative & Choke Point Analysis -->
+        <aside class="sidebar-intel">
+            <!-- Executive Narrative -->
+            <div class="intel-card executive-card">
+                <div class="intel-card-header">
+                    <h3><i class="fas fa-robot"></i> NARRATION OFFENSIVE DE L'IA</h3>
+                    <span class="badge-ai">SYNTHÈSE RSSI</span>
+                </div>
+                <p id="executiveSummary" class="executive-summary">
+                    Chargement de l'analyse...
+                </p>
+            </div>
+
+            <!-- Choke Point Card (Prioritization) -->
+            <div class="intel-card choke-card">
+                <div class="intel-card-header">
+                    <h3><i class="fas fa-crosshairs"></i> POINT D'ÉTRANGLEMENT RECOMMANDÉ</h3>
+                    <span class="badge-priority">ACTION N°1</span>
+                </div>
+                <div id="chokePointContent" class="choke-content"></div>
+            </div>
+
+            <!-- Business Risk Breakdown -->
+            <div class="intel-card business-card">
+                <div class="intel-card-header">
+                    <h3><i class="fas fa-chart-line"></i> ÉVALUATION DU RISQUE BUSINESS</h3>
+                </div>
+                <div class="business-metrics">
+                    <div class="metric-box">
+                        <span class="metric-title">Score CVSS Max</span>
+                        <span class="metric-val critical" id="cvssMax">9.9</span>
+                    </div>
+                    <div class="metric-box">
+                        <span class="metric-title">Impact Financier</span>
+                        <span class="metric-val" id="financialRisk">> 500k €</span>
+                    </div>
+                    <div class="metric-box">
+                        <span class="metric-title">Conformité</span>
+                        <span class="metric-val warning" id="complianceRisk">RGPD / DORA</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step by Step Walkthrough -->
+            <div class="intel-card walkthrough-card">
+                <div class="intel-card-header">
+                    <h3><i class="fas fa-list-ol"></i> CHRONOLOGIE D'INFILTRATION</h3>
+                </div>
+                <div id="walkthroughList" class="walkthrough-list"></div>
+            </div>
+
+            <!-- Export Tools -->
+            <div class="intel-card export-card">
+                <button class="export-btn" onclick="exportJSON()"><i class="fas fa-file-code"></i> Export JSON</button>
+                <button class="export-btn" onclick="exportMermaid()"><i class="fas fa-project-diagram"></i> Diagramme Mermaid</button>
+            </div>
+        </aside>
+    </main>
+
+    <!-- Node Detail Modal (Drawer) -->
+    <div id="nodeModal" class="modal-overlay hidden">
+        <div class="modal-box">
+            <div class="modal-header">
+                <div>
+                    <span id="modalCategory" class="badge-modal">VULNERABILITY</span>
+                    <h3 id="modalTitle">Titre du Nœud</h3>
+                </div>
+                <button class="close-btn" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-meta">
+                    <div><strong>Actif ciblé :</strong> <span id="modalAsset">Web</span></div>
+                    <div><strong>Score CVSS :</strong> <span id="modalCvss" class="cvss-pill">8.5</span></div>
+                    <div><strong>Référence MITRE :</strong> <span id="modalMitre" class="mitre-pill">T1190</span></div>
+                </div>
+                <div class="modal-section">
+                    <h4><i class="fas fa-info-circle"></i> Description Technique du Risque</h4>
+                    <p id="modalDesc"></p>
+                </div>
+                <div class="modal-section">
+                    <h4><i class="fas fa-tools"></i> Remédiation DevSecOps Recommandée</h4>
+                    <p id="modalRemediation" class="code-remediation"></p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="simulateFixBtn" class="simulate-fix-btn" onclick="simulateFixOnSelectedNode()">
+                    <i class="fas fa-wrench"></i> SIMULER LE CORRECTIF SUR CE NŒUD
+                </button>
+                <button class="secondary-btn" onclick="closeModal()">Fermer</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tohon Fourier | Cybersécurité & DevSecOps</title>
+    <meta name="description" content="Portfolio cybersécurité de Tohon Fourier — Spécialiste en sécurité offensive, défensive et DevSecOps basé à Cotonou, Bénin.">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+    <!-- Matrix Rain Canvas -->
+    <canvas id="matrixCanvas"></canvas>
+
+    <!-- Scan Line Overlay -->
+    <div class="scanline-overlay"></div>
+
+    <!-- Loading Screen -->
+    <div id="loadingScreen" class="loading-screen">
+        <div class="boot-sequence">
+            <div class="boot-line" id="bootLines"></div>
+        </div>
+    </div>
+
+    <!-- Laptop Scene -->
+    <div id="laptopScene" class="laptop-scene hidden">
+        <div class="laptop-container">
+            <!-- Laptop Screen -->
+            <div class="laptop-screen">
+                <div class="screen-frame">
+                    <div class="screen-content">
+                        <!-- Browser Chrome -->
+                        <div class="browser-bar">
+                            <div class="browser-dots">
+                                <span class="dot red"></span>
+                                <span class="dot yellow"></span>
+                                <span class="dot green"></span>
+                            </div>
+                            <div class="browser-url">
+                                <i class="fas fa-lock"></i>
+                                <span id="urlText">https://</span>
+                            </div>
+                        </div>
+                        <!-- Search Engine Page -->
+                        <div class="search-page" id="searchPage">
+                            <div class="search-logo">
+                                <span class="logo-bracket">[</span>
+                                <span class="logo-text">CYBER<span class="logo-highlight">SEARCH</span></span>
+                                <span class="logo-bracket">]</span>
+                            </div>
+                            <div class="search-box">
+                                <i class="fas fa-terminal search-icon"></i>
+                                <input type="text" id="searchInput" class="search-input" readonly placeholder="Rechercher...">
+                                <div class="search-cursor" id="searchCursor">|</div>
+                            </div>
+                            <div class="search-suggestions" id="searchSuggestions">
+                            </div>
+                        </div>
+                        <!-- Loading/Hacking Screen -->
+                        <div class="hack-screen hidden" id="hackScreen">
+                            <div class="hack-terminal">
+                                <div id="hackLines" class="hack-lines"></div>
+                                <div class="progress-container">
+                                    <div class="progress-label">DÉCRYPTAGE DU PORTFOLIO...</div>
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" id="progressFill"></div>
+                                    </div>
+                                    <div class="progress-percent" id="progressPercent">0%</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Screen Reflection -->
+                    <div class="screen-reflection"></div>
+                </div>
+            </div>
+            <!-- Laptop Base -->
+            <div class="laptop-base">
+                <div class="laptop-keyboard"></div>
+                <div class="laptop-trackpad"></div>
+            </div>
+            <!-- Laptop Shadow -->
+            <div class="laptop-shadow"></div>
+        </div>
+    </div>
+
+    <!-- ============================================
+         PORTFOLIO CONTENT
+         ============================================ -->
+    <div id="portfolioContent" class="portfolio-content hidden">
+
+        <!-- Navigation -->
+        <nav class="cyber-nav" id="cyberNav">
+            <div class="nav-logo">
+                <span class="nav-bracket">[</span>
+                <span>FOURIER</span>
+                <span class="nav-bracket">]</span>
+            </div>
+            <div class="nav-links">
+                <a href="#about" class="nav-link">PROFIL</a>
+                <a href="#skills" class="nav-link">COMPÉTENCES</a>
+                <a href="#experience" class="nav-link">EXPÉRIENCE</a>
+                <a href="#projects" class="nav-link">PROJETS</a>
+                <a href="#education" class="nav-link">FORMATION</a>
+                <a href="#contact" class="nav-link">CONTACT</a>
+            </div>
+            <div class="nav-hamburger" id="navHamburger">
+                <span></span><span></span><span></span>
+            </div>
+        </nav>
+
+        <!-- Mobile Nav Menu -->
+        <div class="mobile-nav hidden" id="mobileNav">
+            <a href="#about" class="mobile-link">PROFIL</a>
+            <a href="#skills" class="mobile-link">COMPÉTENCES</a>
+            <a href="#experience" class="mobile-link">EXPÉRIENCE</a>
+            <a href="#projects" class="mobile-link">PROJETS</a>
+            <a href="#education" class="mobile-link">FORMATION</a>
+            <a href="#contact" class="mobile-link">CONTACT</a>
+        </div>
+
+        <!-- ========== HERO SECTION ========== -->
+        <section id="hero" class="hero-section">
+            <div class="hero-content">
+                <div class="hero-glitch" data-text="TOHON FOURIER">TOHON FOURIER</div>
+                <div class="hero-subtitle">
+                    <span class="typing-text" id="heroTyping"></span>
+                    <span class="hero-cursor">_</span>
+                </div>
+                <div class="hero-tagline">Cybersécurité Offensive &amp; Défensive · DevSecOps</div>
+                <div class="hero-location">
+                    <i class="fas fa-map-marker-alt"></i> Cotonou, Bénin
+                </div>
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <div class="stat-number" data-count="7" data-suffix="+">0</div>
+                        <div class="stat-label">Projets Cybersécurité</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" data-count="1" data-suffix="">0</div>
+                        <div class="stat-label">Plateforme SaaS créée</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" data-count="5" data-suffix="+">0</div>
+                        <div class="stat-label">Certifications</div>
+                    </div>
+                </div>
+                <div class="hero-cta-group">
+                    <a href="#contact" class="cta-button">
+                        <span class="cta-text">INITIER_CONTACT()</span>
+                    </a>
+                    <a href="#projects" class="cta-button cta-secondary">
+                        <span class="cta-text">VOIR_PROJETS()</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== ABOUT / PROFIL ========== -->
+        <section id="about" class="section about-section">
+            <div class="section-header">
+                <span class="section-tag">&lt;section id="profil"&gt;</span>
+                <h2 class="section-title glitch-hover" data-text="PROFIL">PROFIL</h2>
+            </div>
+            <div class="about-grid">
+                <div class="about-terminal">
+                    <div class="terminal-header">
+                        <span class="terminal-dot"></span>
+                        <span class="terminal-dot"></span>
+                        <span class="terminal-dot"></span>
+                        <span class="terminal-title">fourier@kali:~$</span>
+                    </div>
+                    <div class="terminal-body">
+                        <p class="terminal-line"><span class="prompt">$</span> cat profil.txt</p>
+                        <p class="terminal-output">
+                            Diplômé en Réseaux, Mobilité et Sécurité Informatique, je m'investis pleinement 
+                            dans la cybersécurité offensive et défensive. Mon parcours associe supervision 
+                            SOC, analyse d'alertes, tests d'intrusion et investigation numérique, consolidés 
+                            par une expérience de stage opérationnelle et des laboratoires techniques intensifs.
+                        </p>
+                        <p class="terminal-line"><span class="prompt">$</span> whoami</p>
+                        <p class="terminal-output highlight">Tohon Fourier — Cybersécurité &amp; DevSecOps</p>
+                        <p class="terminal-line"><span class="prompt">$</span> cat specialites.json</p>
+                        <p class="terminal-output json-output">
+{<br>
+&nbsp;&nbsp;"soc": "Supervision &amp; Analyse d'alertes",<br>
+&nbsp;&nbsp;"siem": "Wazuh, Splunk",<br>
+&nbsp;&nbsp;"pentest": "Tests d'intrusion &amp; OWASP Top 10",<br>
+&nbsp;&nbsp;"forensics": "Investigation numérique",<br>
+&nbsp;&nbsp;"devsecops": "CI/CD sécurisé, Docker, Git",<br>
+&nbsp;&nbsp;"réseau": "TCP/IP, VLAN, Routage, Fortinet"<br>
+}
+                        </p>
+                        <p class="terminal-line"><span class="prompt">$</span> cat objectif.txt</p>
+                        <p class="terminal-output">
+                            Créateur de CYBIS, une plateforme SaaS dédiée à l'analyse automatisée des 
+                            vulnérabilités. Sérieux, curieux et rapide à apprendre, je souhaite mettre 
+                            mes compétences au service d'une équipe technique pour continuer à progresser 
+                            sur le terrain.
+                        </p>
+                        <p class="terminal-line"><span class="prompt">$</span> <span class="cursor-blink">_</span></p>
+                    </div>
+                </div>
+                <div class="about-info">
+                    <div class="info-card">
+                        <div class="card-icon"><i class="fas fa-shield-halved"></i></div>
+                        <h3>Blue Team</h3>
+                        <p>Supervision SOC, déploiement SIEM Wazuh, analyse des journaux système et réponse aux alertes de sécurité.</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="card-icon"><i class="fas fa-bug"></i></div>
+                        <h3>Red Team</h3>
+                        <p>Tests d'intrusion sur environnements contrôlés, reconnaissance, exploitation et analyse de vulnérabilités OWASP.</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="card-icon"><i class="fas fa-code-branch"></i></div>
+                        <h3>DevSecOps</h3>
+                        <p>Intégration de la sécurité dans le cycle de développement : Docker, CI/CD, analyse DAST et gestion des dépendances.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== SKILLS / COMPÉTENCES ========== -->
+        <section id="skills" class="section skills-section">
+            <div class="section-header">
+                <span class="section-tag">&lt;section id="compétences"&gt;</span>
+                <h2 class="section-title glitch-hover" data-text="COMPÉTENCES">COMPÉTENCES</h2>
+            </div>
+            <div class="skills-grid">
+                <!-- Cybersécurité & SOC -->
+                <div class="skill-category">
+                    <h3 class="category-title"><i class="fas fa-crosshairs"></i> Cybersécurité &amp; SOC</h3>
+                    <div class="skill-bars">
+                        <div class="skill-bar">
+                            <div class="skill-info">
+                                <span>Wazuh (SIEM / HIDS)</span>
+                                <span class="skill-percent">85%</span>
+                            </div>
+                            <div class="bar-track"><div class="bar-fill" data-width="85"></div></div>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-info">
+                                <span>Nmap / Wireshark</span>
+                                <span class="skill-percent">80%</span>
+                            </div>
+                            <div class="bar-track"><div class="bar-fill" data-width="80"></div></div>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-info">
+                                <span>OWASP Top 10 / CVE-CVSS</span>
+                                <span class="skill-percent">78%</span>
+                            </div>
+                            <div class="bar-track"><div class="bar-fill" data-width="78"></div></div>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-info">
+                                <span>Splunk / Fortinet NGFW</span>
+                                <span class="skill-percent">70%</span>
+                            </div>
+                            <div class="bar-track"><div class="bar-fill" data-width="70"></div></div>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-info">
+                                <span>Investigation numérique (Forensics)</span>
+                                <span class="skill-percent">72%</span>
+                            </div>
+                            <div class="bar-track"><div class="bar-fill" data-width="72"></div></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Réseaux & Systèmes -->
+                <div class="skill-category">
+                    <h3 class="category-title"><i class="fas fa-network-wired"></i> Réseaux &amp; Systèmes</h3>
+                    <div class="skill-bars">
+                        <div class="skill-bar">
+                            <div class="skill-info">
+                                <span>TCP/IP, VLAN, Routage</span>
+                                <span class="skill-percent">82%</span>
+                            </div>
+                            <div class="bar-track"><div class="bar-fill" data-width="82"></div></div>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-info">
+                                <span>Administration Linux</span>
+                                <span class="skill-percent">85%</span>
+                            </div>
+                            <div class="bar-track"><div class="bar-fill" data-width="85"></div></div>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-info">
+                                <span>Windows Server / Active Directory</span>
+                                <span class="skill-percent">75%</span>
+                            </div>
+                            <div class="bar-track"><div class="bar-fill" data-width="75"></div></div>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-info">
+                                <span>Proxmox VE / Virtualisation</span>
+                                <span class="skill-percent">78%</span>
+                            </div>
+                            <div class="bar-track"><div class="bar-fill" data-width="78"></div></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Dev & DevSecOps -->
+                <div class="skill-category">
+                    <h3 class="category-title"><i class="fas fa-code"></i> Développement &amp; DevSecOps</h3>
+                    <div class="skill-bars">
+                        <div class="skill-bar">
+                            <div class="skill-info">
+                                <span>Python / Bash</span>
+                                <span class="skill-percent">80%</span>
+                            </div>
+                            <div class="bar-track"><div class="bar-fill" data-width="80"></div></div>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-info">
+                                <span>Next.js / NestJS / JavaScript</span>
+                                <span class="skill-percent">78%</span>
+                            </div>
+                            <div class="bar-track"><div class="bar-fill" data-width="78"></div></div>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-info">
+                                <span>Docker / Git</span>
+                                <span class="skill-percent">82%</span>
+                            </div>
+                            <div class="bar-track"><div class="bar-fill" data-width="82"></div></div>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-info">
+                                <span>PostgreSQL / Redis / RabbitMQ</span>
+                                <span class="skill-percent">70%</span>
+                            </div>
+                            <div class="bar-track"><div class="bar-fill" data-width="70"></div></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Cloud & Virtualisation -->
+                <div class="skill-category">
+                    <h3 class="category-title"><i class="fas fa-cloud"></i> Cloud &amp; Virtualisation</h3>
+                    <div class="skill-bars">
+                        <div class="skill-bar">
+                            <div class="skill-info">
+                                <span>Proxmox VE</span>
+                                <span class="skill-percent">80%</span>
+                            </div>
+                            <div class="bar-track"><div class="bar-fill" data-width="80"></div></div>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-info">
+                                <span>Microsoft Azure</span>
+                                <span class="skill-percent">68%</span>
+                            </div>
+                            <div class="bar-track"><div class="bar-fill" data-width="68"></div></div>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-info">
+                                <span>Azure Active Directory</span>
+                                <span class="skill-percent">65%</span>
+                            </div>
+                            <div class="bar-track"><div class="bar-fill" data-width="65"></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Langues -->
+            <div class="languages-section">
+                <h3 class="category-title center"><i class="fas fa-globe"></i> Langues</h3>
+                <div class="lang-grid">
+                    <div class="lang-item">
+                        <span class="lang-name">Français</span>
+                        <span class="lang-level">Langue maternelle</span>
+                        <div class="lang-dots">
+                            <span class="lang-dot active"></span>
+                            <span class="lang-dot active"></span>
+                            <span class="lang-dot active"></span>
+                            <span class="lang-dot active"></span>
+                            <span class="lang-dot active"></span>
+                        </div>
+                    </div>
+                    <div class="lang-item">
+                        <span class="lang-name">Anglais</span>
+                        <span class="lang-level">Niveau B1 — Intermédiaire</span>
+                        <div class="lang-dots">
+                            <span class="lang-dot active"></span>
+                            <span class="lang-dot active"></span>
+                            <span class="lang-dot active"></span>
+                            <span class="lang-dot"></span>
+                            <span class="lang-dot"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Certifications -->
+            <div class="certifications">
+                <h3 class="category-title center"><i class="fas fa-certificate"></i> Certifications</h3>
+                <div class="cert-grid">
+                    <div class="cert-badge">
+                        <div class="cert-icon"><i class="fas fa-crosshairs"></i></div>
+                        <span class="cert-name">Nmap Mastery</span>
+                        <span class="cert-issuer">Udemy</span>
+                    </div>
+                    <div class="cert-badge">
+                        <div class="cert-icon"><i class="fab fa-microsoft"></i></div>
+                        <span class="cert-name">Azure Infrastructure</span>
+                        <span class="cert-issuer">Udemy</span>
+                    </div>
+                    <div class="cert-badge">
+                        <div class="cert-icon"><i class="fab fa-microsoft"></i></div>
+                        <span class="cert-name">Azure Active Directory</span>
+                        <span class="cert-issuer">Udemy</span>
+                    </div>
+                    <div class="cert-badge">
+                        <div class="cert-icon"><i class="fab fa-python"></i></div>
+                        <span class="cert-name">Python sous Kali Linux</span>
+                        <span class="cert-issuer">Udemy</span>
+                    </div>
+                    <div class="cert-badge">
+                        <div class="cert-icon"><i class="fab fa-docker"></i></div>
+                        <span class="cert-name">Docker sous Kali Linux</span>
+                        <span class="cert-issuer">Udemy</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== EXPERIENCE ========== -->
+        <section id="experience" class="section experience-section">
+            <div class="section-header">
+                <span class="section-tag">&lt;section id="expérience"&gt;</span>
+                <h2 class="section-title glitch-hover" data-text="EXPÉRIENCE">EXPÉRIENCE</h2>
+            </div>
+            <div class="timeline">
+                <!-- Stage Port Autonome -->
+                <div class="timeline-item">
+                    <div class="timeline-marker">
+                        <i class="fas fa-shield-halved"></i>
+                    </div>
+                    <div class="timeline-content">
+                        <div class="timeline-date">Janvier 2026 — Mars 2026</div>
+                        <h3>Stagiaire IT — Sécurité &amp; Systèmes</h3>
+                        <h4>Port Autonome de Cotonou</h4>
+                        <ul class="timeline-list">
+                            <li>Déploiement d'une plateforme SIEM basée sur Wazuh pour la détection des menaces</li>
+                            <li>Supervision des événements de sécurité et analyse des alertes en temps réel</li>
+                            <li>Analyse des journaux système pour identifier les comportements suspects</li>
+                            <li>Contribution à la sécurisation de l'infrastructure informatique</li>
+                            <li>Support aux utilisateurs et assistance technique de proximité</li>
+                            <li>Participation à l'administration des systèmes et des réseaux</li>
+                        </ul>
+                        <div class="timeline-tags">
+                            <span>Wazuh</span>
+                            <span>SIEM</span>
+                            <span>SOC</span>
+                            <span>Syslog</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- HackerLab -->
+                <div class="timeline-item">
+                    <div class="timeline-marker">
+                        <i class="fas fa-flag"></i>
+                    </div>
+                    <div class="timeline-content">
+                        <div class="timeline-date">2025</div>
+                        <h3>Participant — Compétition Cybersécurité</h3>
+                        <h4>HackerLab Bénin</h4>
+                        <ul class="timeline-list">
+                            <li>Résolution de challenges pratiques en cybersécurité (type CTF)</li>
+                            <li>Analyse de vulnérabilités sur des environnements contrôlés</li>
+                            <li>Mise en œuvre de techniques de reconnaissance et d'exploitation</li>
+                            <li>Investigation numérique : analyse de journaux et d'artefacts de sécurité</li>
+                        </ul>
+                        <div class="timeline-tags">
+                            <span>CTF</span>
+                            <span>Pentest</span>
+                            <span>Forensics</span>
+                            <span>OSINT</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== PROJECTS ========== -->
+        <section id="projects" class="section projects-section">
+            <div class="section-header">
+                <span class="section-tag">&lt;section id="projets"&gt;</span>
+                <h2 class="section-title glitch-hover" data-text="PROJETS">PROJETS</h2>
+            </div>
+            <div class="projects-grid">
+                <!-- CYBIS -->
+                <div class="project-card" data-category="devsecops">
+                    <div class="project-image">
+                        <div class="project-overlay">
+                            <i class="fas fa-radar"></i>
+                        </div>
+                        <div class="project-status live">EN PRODUCTION</div>
+                    </div>
+                    <div class="project-info">
+                        <h3>CYBIS</h3>
+                        <p class="project-subtitle">Plateforme SaaS d'analyse de sécurité</p>
+                        <p>Conception d'une plateforme orientée cybersécurité intégrant un moteur DAST pour 
+                           l'analyse automatisée, la détection et la classification des vulnérabilités, 
+                           ainsi que l'évaluation des risques basée sur les référentiels CVE et CVSS.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Next.js</span>
+                            <span class="tech-tag">NestJS</span>
+                            <span class="tech-tag">PostgreSQL</span>
+                            <span class="tech-tag">Docker</span>
+                            <span class="tech-tag">Redis</span>
+                            <span class="tech-tag">RabbitMQ</span>
+                            <span class="tech-tag">Wazuh</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://aegis-ai-iigg.vercel.app" target="_blank" rel="noopener noreferrer" class="project-link"><i class="fas fa-external-link-alt"></i> Voir le projet</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- AttackGraph-AI -->
+                <div class="project-card" data-category="devsecops">
+                    <div class="project-image">
+                        <div class="project-overlay">
+                            <i class="fas fa-project-diagram"></i>
+                        </div>
+                        <div class="project-status live">DEVSECOPS</div>
+                    </div>
+                    <div class="project-info">
+                        <h3>AttackGraph-AI</h3>
+                        <p class="project-subtitle">Modélisation de Chemins d'Attaque &amp; Choke Points</p>
+                        <p>Plateforme d'Attack Path Management (APM) conçue selon les standards DevSecOps senior. 
+                           Transforme les vulnérabilités en un graphe orienté (DAG) interactif, calcule le chemin 
+                           critique vers la base de données et priorise les points d'étranglement avec simulation de remédiation.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">Graph Theory</span>
+                            <span class="tech-tag">DevSecOps</span>
+                            <span class="tech-tag">Choke Points</span>
+                            <span class="tech-tag">Docker Non-Root</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://github.com/CalderaFourier-code" target="_blank" rel="noopener noreferrer" class="project-link"><i class="fab fa-github"></i> Dépôt GitHub</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- PhishScope-AI -->
+                <div class="project-card" data-category="osint">
+                    <div class="project-image">
+                        <div class="project-overlay">
+                            <i class="fas fa-shield-virus"></i>
+                        </div>
+                        <div class="project-status live">PORTABLE</div>
+                    </div>
+                    <div class="project-info">
+                        <h3>PhishScope-AI</h3>
+                        <p class="project-subtitle">Console CLI d'Analyse Anti-Phishing &amp; OSINT</p>
+                        <p>Console interactive dédiée au triage d'URLs suspectes dans le terminal. Détecte les attaques 
+                           homographes (Punycode/Cyrillique), le typosquatting (Levenshtein), les redirections et 
+                           génère une jauge de risque ASCII (0-100) avec recommandations SOC et scans en lot.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">100% CLI</span>
+                            <span class="tech-tag">OSINT</span>
+                            <span class="tech-tag">Homoglyphes</span>
+                            <span class="tech-tag">Typosquatting</span>
+                            <span class="tech-tag">Bulk Triage</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://github.com/CalderaFourier-code" target="_blank" rel="noopener noreferrer" class="project-link"><i class="fab fa-github"></i> Dépôt GitHub</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- ShadowPot -->
+                <div class="project-card" data-category="defensive">
+                    <div class="project-image">
+                        <div class="project-overlay">
+                            <i class="fas fa-spider"></i>
+                        </div>
+                        <div class="project-status live">NOUVEAU</div>
+                    </div>
+                    <div class="project-info">
+                        <h3>ShadowPot</h3>
+                        <p class="project-subtitle">Honeypot &amp; Moteur de Profilage MITRE ATT&amp;CK</p>
+                        <p>Système de déception interactif multi-services simulant un shell Linux (SSH/Telnet) 
+                           et un portail d'administration web. Enregistre les frappes, capture les identifiants 
+                           et cartographie automatiquement les tactiques d'attaque sur le framework MITRE ATT&amp;CK.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">Deception Tech</span>
+                            <span class="tech-tag">MITRE ATT&amp;CK</span>
+                            <span class="tech-tag">Threat Intel</span>
+                            <span class="tech-tag">HTML Report</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://github.com/CalderaFourier-code" target="_blank" rel="noopener noreferrer" class="project-link"><i class="fab fa-github"></i> Dépôt GitHub</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- NetVuln-Scan -->
+                <div class="project-card" data-category="offensive">
+                    <div class="project-image">
+                        <div class="project-overlay">
+                            <i class="fas fa-crosshairs"></i>
+                        </div>
+                        <div class="project-status live">OPEN SOURCE</div>
+                    </div>
+                    <div class="project-info">
+                        <h3>NetVuln-Scan</h3>
+                        <p class="project-subtitle">Scanner de Reconnaissance &amp; Corrélation CVE</p>
+                        <p>Outil CLI multithreadé développé en Python réalisant le balayage TCP rapide, 
+                           l'extraction des bannières applicatives (banner grabbing) et la corrélation 
+                           automatique des vulnérabilités CVE avec scores CVSS via les API publiques.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">Sockets TCP</span>
+                            <span class="tech-tag">Multithreading</span>
+                            <span class="tech-tag">CVE / CVSS</span>
+                            <span class="tech-tag">Shodan API</span>
+                            <span class="tech-tag">HTML Report</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://github.com/CalderaFourier-code" target="_blank" rel="noopener noreferrer" class="project-link"><i class="fab fa-github"></i> Dépôt GitHub</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Labs Offensifs & Défensifs -->
+                <div class="project-card" data-category="offensive">
+                    <div class="project-image">
+                        <div class="project-overlay">
+                            <i class="fas fa-skull-crossbones"></i>
+                        </div>
+                        <div class="project-status">CONTINU</div>
+                    </div>
+                    <div class="project-info">
+                        <h3>Laboratoires Offensifs &amp; Défensifs</h3>
+                        <p class="project-subtitle">Entraînement en sécurité offensive et Blue Team</p>
+                        <p>Tests d'intrusion sur environnements contrôlés, analyse d'OWASP Juice Shop, 
+                           laboratoires Blue Team sur TryHackMe, détection et analyse d'incidents, 
+                           rédaction de rapports de sécurité structurés.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Kali Linux</span>
+                            <span class="tech-tag">Nmap</span>
+                            <span class="tech-tag">Burp Suite</span>
+                            <span class="tech-tag">OWASP</span>
+                            <span class="tech-tag">TryHackMe</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://github.com/CalderaFourier-code" target="_blank" rel="noopener noreferrer" class="project-link"><i class="fab fa-github"></i> GitHub</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Infrastructure Linux -->
+                <div class="project-card" data-category="infrastructure">
+                    <div class="project-image">
+                        <div class="project-overlay">
+                            <i class="fas fa-server"></i>
+                        </div>
+                        <div class="project-status">COMPLÉTÉ</div>
+                    </div>
+                    <div class="project-info">
+                        <h3>Infrastructure Linux &amp; Virtualisation</h3>
+                        <p class="project-subtitle">Laboratoire de cybersécurité virtualisé</p>
+                        <p>Déploiement de serveurs Linux, administration de services système, 
+                           création de laboratoires de cybersécurité sous Proxmox VE et configuration 
+                           réseau d'environnements virtuels isolés.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Proxmox VE</span>
+                            <span class="tech-tag">Linux</span>
+                            <span class="tech-tag">VLAN</span>
+                            <span class="tech-tag">Firewall</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://github.com/CalderaFourier-code" target="_blank" rel="noopener noreferrer" class="project-link"><i class="fab fa-github"></i> GitHub</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== EDUCATION / FORMATION ========== -->
+        <section id="education" class="section education-section">
+            <div class="section-header">
+                <span class="section-tag">&lt;section id="formation"&gt;</span>
+                <h2 class="section-title glitch-hover" data-text="FORMATION">FORMATION</h2>
+            </div>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-marker">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <div class="timeline-content">
+                        <div class="timeline-date">2023 — 2026</div>
+                        <h3>Licence en Réseaux, Mobilité et Sécurité Informatique</h3>
+                        <h4>Pigier Bénin</h4>
+                        <p>Formation couvrant l'administration réseau, la sécurité des systèmes d'information, 
+                           les architectures mobiles et la gestion d'infrastructures.</p>
+                        <div class="timeline-tags">
+                            <span>Réseaux</span>
+                            <span>Sécurité</span>
+                            <span>Systèmes</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-marker">
+                        <i class="fas fa-school"></i>
+                    </div>
+                    <div class="timeline-content">
+                        <div class="timeline-date">2022 — 2023</div>
+                        <h3>Baccalauréat — Série D</h3>
+                        <h4>Collège Sainte Thérèse d'Abomey</h4>
+                        <p>Baccalauréat scientifique, spécialité Mathématiques et Sciences de la Vie et de la Terre.</p>
+                        <div class="timeline-tags">
+                            <span>Sciences</span>
+                            <span>Mathématiques</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== CONTACT ========== -->
+        <section id="contact" class="section contact-section">
+            <div class="section-header">
+                <span class="section-tag">&lt;section id="contact"&gt;</span>
+                <h2 class="section-title glitch-hover" data-text="CONTACT">CONTACT</h2>
+            </div>
+            <div class="contact-grid">
+                <div class="contact-terminal">
+                    <div class="terminal-header">
+                        <span class="terminal-dot"></span>
+                        <span class="terminal-dot"></span>
+                        <span class="terminal-dot"></span>
+                        <span class="terminal-title">secure_channel@fourier:~$</span>
+                    </div>
+                    <div class="terminal-body">
+                        <p class="terminal-line"><span class="prompt">$</span> cat coordonnees.json</p>
+                        <p class="terminal-output json-output">
+{<br>
+&nbsp;&nbsp;"nom": "Tohon Fourier",<br>
+&nbsp;&nbsp;"localisation": "Cotonou, Bénin",<br>
+&nbsp;&nbsp;"email": "fouriertohon@gmail.com",<br>
+&nbsp;&nbsp;"tel": "+229 01 96 42 45 71",<br>
+&nbsp;&nbsp;"github": "https://github.com/CalderaFourier-code",<br>
+&nbsp;&nbsp;"statut": "Disponible"<br>
+}
+                        </p>
+                        <p class="terminal-line"><span class="prompt">$</span> echo "Ouvert aux opportunités"</p>
+                        <p class="terminal-output highlight">Ouvert aux opportunités en cybersécurité, SOC et DevSecOps.</p>
+                        <p class="terminal-line"><span class="prompt">$</span> <span class="cursor-blink">_</span></p>
+                    </div>
+                </div>
+                <div class="contact-form-container">
+                    <form class="contact-form" id="contactForm">
+                        <div class="form-group">
+                            <label><i class="fas fa-user"></i> Identifiant</label>
+                            <input type="text" placeholder="Votre nom" required>
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-envelope"></i> Canal sécurisé</label>
+                            <input type="email" placeholder="votre@email.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-terminal"></i> Message</label>
+                            <textarea placeholder="Votre message..." rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="submit-btn">
+                            <span>TRANSMETTRE_MESSAGE()</span>
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+            <!-- Direct contact info -->
+            <div class="direct-contact">
+                <a href="mailto:fouriertohon@gmail.com" class="direct-link">
+                    <i class="fas fa-envelope"></i> fouriertohon@gmail.com
+                </a>
+                <a href="tel:+2290196424571" class="direct-link">
+                    <i class="fas fa-phone"></i> +229 01 96 42 45 71
+                </a>
+                <a href="https://github.com/CalderaFourier-code" target="_blank" rel="noopener noreferrer" class="direct-link">
+                    <i class="fab fa-github"></i> CalderaFourier-code
+                </a>
+            </div>
+            <div class="social-links">
+                <a href="https://github.com/CalderaFourier-code" target="_blank" rel="noopener noreferrer" class="social-link" title="GitHub"><i class="fab fa-github"></i></a>
+                <a href="https://linkedin.com/" target="_blank" rel="noopener noreferrer" class="social-link" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                <a href="https://tryhackme.com/" target="_blank" rel="noopener noreferrer" class="social-link" title="TryHackMe"><i class="fas fa-flag"></i></a>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="cyber-footer">
+            <div class="footer-content">
+                <div class="footer-matrix-line" id="footerMatrix"></div>
+                <p>&lt;/&gt; Conçu par <span class="footer-name">Tohon Fourier</span> | 2026</p>
+                <p class="footer-sub">Tous les systèmes sont surveillés. La sécurité n'est pas une option.</p>
+            </div>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

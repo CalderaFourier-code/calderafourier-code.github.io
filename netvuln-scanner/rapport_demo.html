@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Rapport d'Audit NetVuln-Scan - 192.168.1.150</title>
+    <style>
+        body {
+            background: #0a0e14;
+            color: #dcdfe4;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 30px;
+        }
+        .header {
+            border-bottom: 2px solid #00ff41;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        h1 {
+            color: #00ff41;
+            margin: 0 0 10px 0;
+            font-family: monospace;
+            letter-spacing: 2px;
+        }
+        .meta {
+            color: #5c6370;
+            font-size: 13px;
+        }
+        .meta strong { color: #00d4ff; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background: #10151d;
+            border-radius: 6px;
+            overflow: hidden;
+            border: 1px solid #1f2430;
+        }
+        th {
+            background: #171d28;
+            color: #00ff41;
+            text-align: left;
+            padding: 14px;
+            font-size: 13px;
+            border-bottom: 2px solid #00ff4133;
+        }
+        td {
+            padding: 14px;
+            border-bottom: 1px solid #1a202c;
+            font-size: 13px;
+            vertical-align: top;
+        }
+        .port-cell { color: #00d4ff; font-weight: bold; font-family: monospace; }
+        .service-cell { color: #e5c07b; font-weight: 500; }
+        .banner-sub { color: #5c6370; font-family: monospace; font-size: 11px; }
+        .cve-badge {
+            padding: 6px 10px;
+            border-radius: 4px;
+            margin-bottom: 5px;
+            font-size: 12px;
+        }
+        .cve-badge.crit { background: rgba(255, 0, 64, 0.15); border: 1px solid #ff0040; color: #ff5370; }
+        .cve-badge.high { background: rgba(255, 140, 0, 0.15); border: 1px solid #ff8c00; color: #ffb454; }
+        .cve-badge.med  { background: rgba(255, 215, 0, 0.15); border: 1px solid #ffd700; color: #eed45e; }
+        .cve-none { color: #7f8c8d; font-style: italic; }
+        .footer {
+            margin-top: 40px;
+            text-align: center;
+            font-size: 12px;
+            color: #5c6370;
+            border-top: 1px solid #1f2430;
+            padding-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>[+] RAPPORT NETVULN-SCAN</h1>
+        <div class="meta">
+            Cible : <strong>192.168.1.150</strong> (vulnerable-lab.local) | 
+            Horodatage : <strong>2026-11-01 03:28:38</strong> | 
+            Durée d'audit : <strong>0.85s</strong> | 
+            Auditeur : <strong>Tohon Fourier</strong>
+        </div>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th style="width: 120px;">PORT</th>
+                <th style="width: 140px;">SERVICE</th>
+                <th style="width: 280px;">VERSION / BANNIÈRE</th>
+                <th>VULNÉRABILITÉS & CORRÉLATION CVE</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+        <tr>
+            <td class="port-cell">21/tcp</td>
+            <td class="service-cell">FTP</td>
+            <td>vsftpd 2.3.4<br><small class="banner-sub">220 vsFTPd 2.3.4</small></td>
+            <td>
+                <div class="cve-badge crit">
+                    <strong>CVE-2011-2523</strong> (Score CVSS: 9.8) - Backdoor Command Execution (Smiley Face Backdoor)
+                </div></td>
+        </tr>
+        <tr>
+            <td class="port-cell">22/tcp</td>
+            <td class="service-cell">SSH</td>
+            <td>openssh 7.4<br><small class="banner-sub">SSH-2.0-OpenSSH_7.4p1 Debian-10</small></td>
+            <td>
+                <div class="cve-badge med">
+                    <strong>CVE-2018-15473</strong> (Score CVSS: 5.3) - User Enumeration vulnerability via malformed packets
+                </div></td>
+        </tr>
+        <tr>
+            <td class="port-cell">80/tcp</td>
+            <td class="service-cell">HTTP</td>
+            <td>apache 2.4.49<br><small class="banner-sub">HTTP Server: Apache/2.4.49 (Unix)</small></td>
+            <td>
+                <div class="cve-badge crit">
+                    <strong>CVE-2021-41773</strong> (Score CVSS: 9.8) - Path Traversal & Remote Code Execution
+                </div>
+                <div class="cve-badge crit">
+                    <strong>CVE-2021-42013</strong> (Score CVSS: 9.8) - Path Traversal & RCE bypass
+                </div></td>
+        </tr>
+        <tr>
+            <td class="port-cell">443/tcp</td>
+            <td class="service-cell">HTTPS</td>
+            <td>nginx 1.18.0<br><small class="banner-sub">HTTP Server: nginx/1.18.0</small></td>
+            <td>
+                <div class="cve-badge high">
+                    <strong>CVE-2021-23017</strong> (Score CVSS: 7.7) - 1-byte memory overwrite in resolver component
+                </div></td>
+        </tr>
+        <tr>
+            <td class="port-cell">3306/tcp</td>
+            <td class="service-cell">MySQL</td>
+            <td>mysql 5.7.34<br><small class="banner-sub">5.7.34-MySQL Community Server</small></td>
+            <td><span class="cve-none">Aucune vulnérabilité immédiate répertoriée</span></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div class="footer">
+        NetVuln-Scan v1.0.0 — Conçu par Tohon Fourier (CalderaFourier-code). Usage légitime et autorisé uniquement.
+    </div>
+</body>
+</html>

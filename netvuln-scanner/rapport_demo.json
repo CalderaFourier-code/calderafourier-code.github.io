@@ -1,0 +1,86 @@
+{
+  "scan_metadata": {
+    "scanner": "NetVuln-Scan",
+    "author": "Tohon Fourier (CalderaFourier-code)",
+    "target": "192.168.1.150",
+    "hostname": "vulnerable-lab.local",
+    "timestamp": "2026-11-01T03:28:38.842619",
+    "open_ports_count": 5
+  },
+  "findings": [
+    {
+      "port": 21,
+      "service": "FTP",
+      "banner": "220 vsFTPd 2.3.4",
+      "software": "vsftpd",
+      "version": "2.3.4",
+      "cves": [
+        {
+          "id": "CVE-2011-2523",
+          "cvss": 9.8,
+          "severity": "CRITICAL",
+          "desc": "Backdoor Command Execution (Smiley Face Backdoor)"
+        }
+      ]
+    },
+    {
+      "port": 22,
+      "service": "SSH",
+      "banner": "SSH-2.0-OpenSSH_7.4p1 Debian-10",
+      "software": "openssh",
+      "version": "7.4",
+      "cves": [
+        {
+          "id": "CVE-2018-15473",
+          "cvss": 5.3,
+          "severity": "MEDIUM",
+          "desc": "User Enumeration vulnerability via malformed packets"
+        }
+      ]
+    },
+    {
+      "port": 80,
+      "service": "HTTP",
+      "banner": "HTTP Server: Apache/2.4.49 (Unix)",
+      "software": "apache",
+      "version": "2.4.49",
+      "cves": [
+        {
+          "id": "CVE-2021-41773",
+          "cvss": 9.8,
+          "severity": "CRITICAL",
+          "desc": "Path Traversal & Remote Code Execution"
+        },
+        {
+          "id": "CVE-2021-42013",
+          "cvss": 9.8,
+          "severity": "CRITICAL",
+          "desc": "Path Traversal & RCE bypass"
+        }
+      ]
+    },
+    {
+      "port": 443,
+      "service": "HTTPS",
+      "banner": "HTTP Server: nginx/1.18.0",
+      "software": "nginx",
+      "version": "1.18.0",
+      "cves": [
+        {
+          "id": "CVE-2021-23017",
+          "cvss": 7.7,
+          "severity": "HIGH",
+          "desc": "1-byte memory overwrite in resolver component"
+        }
+      ]
+    },
+    {
+      "port": 3306,
+      "service": "MySQL",
+      "banner": "5.7.34-MySQL Community Server",
+      "software": "mysql",
+      "version": "5.7.34",
+      "cves": []
+    }
+  ]
+}
